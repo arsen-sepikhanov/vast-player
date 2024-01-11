@@ -1,9 +1,11 @@
 (function () {
-    var myPlayer = videojs('vast-player');
+    var player = videojs('vast-video-ok');
     var vastClient = new VAST.VASTClient();
+
 
     vastClient.get('./vast-linear-tag-test.xml')
         .then(function (res) {
+            console.log("Successfully parsed xml vast file")
             console.log(res);
 
             myPlayer.src([

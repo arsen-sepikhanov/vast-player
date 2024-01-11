@@ -7,7 +7,7 @@
         div.solid {border-style: solid;}
     </style>
     <link href="https://vjs.zencdn.net/8.9.0/video-js.css" rel="stylesheet" />
-    <script src="https://vjs.zencdn.net/8.9.0/video.min.js"></script>
+    <script src="https://vjs.zencdn.net/8.9.0/video.js"></script>
 </head>
 <body>
   <div class="solid">
@@ -17,7 +17,7 @@
   </div>
   <div class="solid">
       <p>
-          This is container with video itself
+          This is container with static video in videojs player
       </p>
       <video
               id="static-video"
@@ -38,5 +38,23 @@
           </p>
       </video>
   </div>
+  <div class="solid">
+      <p>
+          This container contains valid vast video, played via videojs player
+      </p>
+      <video
+              id="vast-video-ok"
+              data-setup="{}"
+      >
+
+      </video>
+
+
+  </div>
 </body>
+
+<!--In the very end to guarantee video tag already exists at moment of script run-->
+<script src="vast-client.js"></script>
+<script src="vast.js"></script>
+
 </html>
