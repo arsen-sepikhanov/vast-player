@@ -15,12 +15,28 @@
           Hello, this is visible text in bordered container
       </p>
   </div>
-  <div>
+  <div class="solid">
       <p>
           This is container with video itself
       </p>
-
-
+      <video
+              id="static-video"
+              class="video-js"
+              controls
+              preload="auto"
+              width="640"
+              height="264"
+              data-setup="{}"
+      >
+          <source src="http://localhost:8690/media/video.mp4" type="video/mp4" />
+          <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a
+              web browser that
+              <a href="https://videojs.com/html5-video-support/" target="_blank"
+              >supports HTML5 video</a
+              >
+          </p>
+      </video>
   </div>
 </body>
 </html>
