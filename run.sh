@@ -1,0 +1,1 @@
+docker run -p 8690:80 --name nginx-video-server  nginx-video-server
