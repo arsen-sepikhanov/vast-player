@@ -16,17 +16,14 @@
             });
 
             const vastTracker = new VAST.VASTTracker(vastClient, res.ads[0], res.ads[0].creatives[0]);
-            // tracker complete example
-            // will automatically call
-            //      <Tracking event="complete">http://example.com/tracking/complete</Tracking>
-            // inside vastTracker.complete()
-            // and then fire vastTracker.on('completed'
-            vastTracker.complete();
-            vastTracker.on('completed', () => {
-                console.log('Tracker completed')
-                // urls were called
+
+            player.on('ended',()=>{
+                vastTracker.complete()
             });
 
+            player.on('timeupdate',function() {
+                vastTracker.setProgress(this.currentTime())
+            });
         })
         .catch(function (err) {
             console.log(err);
