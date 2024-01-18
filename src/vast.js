@@ -1,41 +1,58 @@
 (function () {
-    var vastClient = new VAST.VASTClient();
-
-    initVast('vast-video-ok', vastClient,'./vast-linear-tag-test.xml')
-    initVast('vast-video-hidden', vastClient,'./vast-linear-tag-test-empty.xml')
+    document.addEventListener("DOMContentLoaded", function() {
+        beginVast()
+    });
 }());
 
-function initVast(id, vastClient, link) {
-    let player = videojs(id);
-    vastClient.get(link)
-        .then(function (res) {
-            console.log("Successfully parsed xml vast file " + link)
-            console.log(res);
+function beginVast() {
+    console.log('Page loaded')
+    let vastClient = new VAST.VASTClient();
 
+    const elements = document.querySelectorAll(`[id^="alfadart_"]`);
+    elements.forEach(function (elem) {
+        if (elem.classList.contains('alfadart_video')) {
+            let section = elem.id.replace('alfadart_', '')
+            vastClient.get('http://localhost:5000/adserver?section=' + section)
+                .then(function (res) {
+                    console.log("Successfully parsed xml vast file for section=" + section)
+                    console.log(res);
 
-            let fileUrl = res?.ads[0]?.creatives[0]?.mediaFiles[0]?.fileURL
-            if (!fileUrl) {
-                player.dispose()
-                return
-            }
+                    createPlayer(res, elem, vastClient)
+                })
+        }
+    })
+}
 
-            player.src([fileUrl]);
+function createPlayer(vastObject, parent, vastClient) {
+    let mf = vastObject?.ads[0]?.creatives[0]?.mediaFiles[0]
+    console.log(mf)
+    let fileUrl = mf?.fileURL
+    if (!fileUrl) {
+        return
+    }
 
-            player.ready(function () {
-                player.play();
-            });
+    let player = document.createElement('video')
+    player.autoplay = true
+    player.controls = true
+    parent.appendChild(player)
+    let source = document.createElement('source');
+    source.src = fileUrl
+    source.type = mf.mimeType
+    source.width = mf.width
+    source.height = mf.height
+    player.appendChild(source)
 
-            const vastTracker = new VAST.VASTTracker(vastClient, res.ads[0], res.ads[0].creatives[0]);
+    const vastTracker = new VAST.VASTTracker(vastClient, vastObject.ads[0], vastObject.ads[0].creatives[0]);
 
-            player.on('ended',()=>{
-                vastTracker.complete()
-            });
+    player.ontimeupdate = function() {
+        vastTracker.setProgress(player.currentTime)
+    };
 
-            player.on('timeupdate',function() {
-                vastTracker.setProgress(this.currentTime())
-            });
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
+    player.addEventListener('click', (event) => {
+        vastTracker.click()
+    })
+
+    player.addEventListener('ended', (event) => {
+        vastTracker.complete()
+    })
 }

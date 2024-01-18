@@ -5,68 +5,42 @@
     <title>Some site title</title>
     <style>
         div.solid {border-style: solid;}
+        div.alfadart_video {
+            background: lightgrey;
+        }
     </style>
-    <link href="https://vjs.zencdn.net/8.9.0/video-js.css" rel="stylesheet" />
-    <script src="https://vjs.zencdn.net/8.9.0/video.js"></script>
+    <script src="vast-client.js"></script>
+    <script src="vast.js"></script>
 </head>
 <body>
   <div class="solid">
       <p>
-          Hello, this is visible text in bordered container
+          Some website
       </p>
   </div>
   <div class="solid">
       <p>
-          This is container with static video in videojs player
+          This is container with static video in native video player
       </p>
-      <video
-              id="static-video"
-              class="video-js"
-              controls
-              preload="auto"
-              width="640"
-              height="264"
-              data-setup="{}"
-      >
+      <video controls preload="auto">
           <source src="http://localhost:8690/media/video.mp4" type="video/mp4" />
-          <p class="vjs-no-js">
-              To view this video please enable JavaScript, and consider upgrading to a
-              web browser that
-              <a href="https://videojs.com/html5-video-support/" target="_blank"
-              >supports HTML5 video</a
-              >
-          </p>
+          Your browser does not support HTML video.
       </video>
   </div>
-  <div class="solid">
+  <div id="alfadart_section1" class="solid alfadart_video">
       <p>
-          This container contains valid vast video, played via videojs player
+          alfadart_section1 div: video exists and played
       </p>
-      <video
-              id="vast-video-ok"
-              data-setup="{}"
-              muted="muted"
-      >
-      </video>
-
-
   </div>
-  <div class="solid">
+  <div id="alfadart_section2" class="solid alfadart_video">
       <p>
-          This video container will be removed
+          alfadart_section2 div: vast has no video -> no player
       </p>
-      <video
-              class="solid"
-              id="vast-video-hidden"
-              data-setup="{}"
-              muted="muted"
-      >
-      </video>
+  </div>
+  <div id="alfadart_section3"class="solid alfadart_video">
+      <p>
+          alfadart_section3 div: vast xml loading error
+      </p>
   </div>
 </body>
-
-<!--In the very end to guarantee video tag already exists at moment of script run-->
-<script src="vast-client.js"></script>
-<script src="vast.js"></script>
-
 </html>
