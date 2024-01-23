@@ -17,6 +17,12 @@ def hello():
     elif section == 'section2':
         file = read_file('vast-empty.xml')
         print('section2 ended')
+    elif section == 'section4':
+        file = read_file('vast-wrapper.xml')
+        print('section4 ended')
+    elif section == 'section5':
+        file = read_file('vast-unwrapped.xml')
+        print('section4 ended')
     else:
         resp = make_response('error', 500)
         resp.headers.add('Access-Control-Allow-Origin', '*')

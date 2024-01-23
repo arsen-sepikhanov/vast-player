@@ -1,0 +1,29 @@
+<VAST version="3.0">
+    <Ad id="20011">
+        <Wrapper>
+            <AdSystem version="4.0">iabtechlab</AdSystem>
+            <VASTAdTagURI><![CDATA[http://localhost:5000/adserver?section=section5]]></VASTAdTagURI>
+
+            <Error>http://example.com/error</Error>
+
+            <Impression>http://example.com/track/impression</Impression>
+            <Creatives>
+                <Creative id="5480" sequence="1">
+                    <Linear>
+                        <TrackingEvents>
+                            <Tracking event="progress" offset="00:00:10.000">
+                                <![CDATA[https://mytrackingsolution.com/vregister.php?a=vview&tracking_event=progress&progress=00:00:10.000&idzone=22222&data=abcd]]></Tracking>
+                            <Tracking event="firstQuartile">
+                                <![CDATA[https://mytrackingsolution.com/vregister.php?event=firstQuartile&section=[CONTENTID]]]></Tracking>
+                            <Tracking id="custom_1" event="creativeView"><![CDATA[https://mytrackingsolution.com/vregister.php?a=vview&tracking_event=creativeView&idzone=22222&data=abcd]]></Tracking>
+                        </TrackingEvents>
+                        <VideoClicks>
+                            <ClickThrough>
+                                <![CDATA[https://mytrackingsolution.com/click.php?data=abcd]]></ClickThrough>
+                        </VideoClicks>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </Wrapper>
+    </Ad>
+</VAST>
