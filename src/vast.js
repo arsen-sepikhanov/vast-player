@@ -17,13 +17,13 @@ function beginVast() {
                     console.log("Successfully parsed xml vast file for section=" + section)
                     console.log(res);
 
-                    createPlayer(res, elem, vastClient)
+                    createPlayer(res, elem, vastClient, section)
                 })
         }
     })
 }
 
-function createPlayer(vastObject, parent, vastClient) {
+function createPlayer(vastObject, parent, vastClient, section) {
     let mf = vastObject?.ads[0]?.creatives[0]?.mediaFiles[0]
     console.log(mf)
     let fileUrl = mf?.fileURL
@@ -43,16 +43,19 @@ function createPlayer(vastObject, parent, vastClient) {
     player.appendChild(source)
 
     const vastTracker = new VAST.VASTTracker(vastClient, vastObject.ads[0], vastObject.ads[0].creatives[0]);
+    let macros = {
+        CONTENTID: section
+    }
 
     player.ontimeupdate = function() {
-        vastTracker.setProgress(player.currentTime)
+        vastTracker.setProgress(player.currentTime, macros)
     };
 
     player.addEventListener('click', (event) => {
-        vastTracker.click()
+        vastTracker.click(undefined, macros)
     })
 
     player.addEventListener('ended', (event) => {
-        vastTracker.complete()
+        vastTracker.complete(macros)
     })
 }
