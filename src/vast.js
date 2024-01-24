@@ -34,6 +34,7 @@ function createPlayer(vastObject, parent, vastClient, section) {
     let player = document.createElement('video')
     player.autoplay = true
     player.controls = true
+    player.muted = true
     parent.appendChild(player)
     let source = document.createElement('source');
     source.src = fileUrl
